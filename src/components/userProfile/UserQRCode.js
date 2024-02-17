@@ -21,7 +21,7 @@ import "./UserProfile.css";
 
 import {baseURL} from "../../api/api"
 const apiBaseUrl = baseURL 
-
+const URL = "https://offerads.netlify.app"
 const UserQRCode = () => {
   const { id } = useParams();
   const location = useLocation();
@@ -52,7 +52,7 @@ const UserQRCode = () => {
 
   async function generateQR() {
     try {
-      const url = `https://api.qrserver.com/v1/create-qr-code/?size=150%C3%97150&data=${apiBaseUrl}/offerview/${userID}`;
+      const url = `https://api.qrserver.com/v1/create-qr-code/?size=150%C3%97150&data=${URL}/offerview/${userID}`;
       setImg(url);
       console.log(url);
       // const updatedUserData = {
