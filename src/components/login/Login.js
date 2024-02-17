@@ -64,11 +64,13 @@ const Login = () => {
             "Email not verified. Please check your email for the verification link."
           );
           navigate("/resend-verification-email");
+          setLoading(false);
         }
       } catch (error) {
         toast.error(error.response.data.message);
         navigate("/login");
-        console.error("Login error --:", error.message);
+        setLoading(false);
+        // console.error("Login error --:", error.message);
       }
     }
   };

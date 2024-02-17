@@ -52,7 +52,7 @@ const UserQRCode = () => {
 
   async function generateQR() {
     try {
-      const url = `https://api.qrserver.com/v1/create-qr-code/?size=150%C3%97150&data=http://localhost:3000/offerview/${userID}`;
+      const url = `https://api.qrserver.com/v1/create-qr-code/?size=150%C3%97150&data=${apiBaseUrl}/offerview/${userID}`;
       setImg(url);
       console.log(url);
       // const updatedUserData = {
