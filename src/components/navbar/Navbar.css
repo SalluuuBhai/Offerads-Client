@@ -1,0 +1,71 @@
+
+
+.home,
+.offers,
+.about,
+.login
+{
+  text-decoration: none;
+  color: #2e6ca4;
+  font-size: 25px;
+  margin: 0;
+  padding: 10px 15px;
+  transition: all 0.5s ease;
+  /* font-family:'Montserrat', sans-serif; */
+  font-family: "Oxygen", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  text-align: center;
+  line-height: 1;
+  font-size: 20px;
+  background-color: transparent;
+  outline: none;
+  border-radius: 10px;
+}
+
+.register {
+  text-decoration: none;
+  color: #ffff;
+  /* border: 1px solid #183957; */
+  background-color: #2e6ca4;
+  font-size: 25px;
+  margin: 0;
+  padding: 10px 15px ;
+  transition: all 0.5s ease;
+  /* font-family:'Montserrat', sans-serif; */
+  font-family: "Oxygen", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  text-align: center;
+  line-height: 1;
+  font-size: 20px;
+  /* background-color: transparent; */
+  outline: none;
+  border-radius: 10px;
+}
+
+.home:hover,
+.offers:hover,
+.about:hover,
+.login:hover {
+  color: #ffff;
+  background-color: #2e6ca4;
+  border-radius: 10px;
+  /* border: 1px solid #183957; */
+  padding: 10px auto;
+}
+
+.register:hover{
+  color: #2e6ca4;
+  background-color: #ffff;
+  padding: 10px auto;
+  border: 1px solid #183957;
+}
+
+/* Font name: HelveticaNowMTText, Helvetica, Arial, sans-serif
+
+Font size: 13px
+
+Font weight: 400
+
+Line height: 16px */

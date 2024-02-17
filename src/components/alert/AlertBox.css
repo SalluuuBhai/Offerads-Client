@@ -1,0 +1,44 @@
+/* AlertBox.css */
+
+.alert-box {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 1;
+    width: 100%;
+  }
+  
+  .alert-box.hidden {
+    opacity: 0;
+    pointer-events: none; /* Disable interactions when hidden */
+  }
+  
+  .alert-box h2 {
+    color: #333;
+  }
+  
+  .alert-box p {
+    color: #666;
+  }
+  
+  .alert-box button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    width: 100px;
+  }
+  
+  .alert-box button:hover {
+    background-color: #2980b9;
+  }
+  

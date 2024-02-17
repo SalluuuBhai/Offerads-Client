@@ -1,0 +1,1 @@
+const GoogleAuthProvider = "370734531441-8kbgb5ioh923v19vc36k2ssa4nmhlvsn.apps.googleusercontent.com"
