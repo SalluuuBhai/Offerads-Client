@@ -34,7 +34,7 @@ function BasicExample() {
             to="/"
             alt="Offerads Logo"
             className="img-fluid"
-            style={{ width: "200px", height: "70px", objectFit: "none" }}
+            style={{ width: "235px", height: "70px", objectFit: "none" }}
           />
         </Navbar.Brand>
         <Navbar.Toggle
