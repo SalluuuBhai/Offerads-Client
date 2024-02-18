@@ -17,12 +17,12 @@
 
 .icon,
 .form-control{
-    border: none;
-    border-bottom: 1px solid#2e6ca4;
+    border: none !important;
+    border-bottom: 1px solid#2e6ca4 !important;
     /* background-color: #439ef0; */
     /* text-decoration-line: #439ef0; */
     padding: 10px 5px;
-    outline: none;
+    outline: none !important;
     /* position: relative; */
 }
 .button{
@@ -32,7 +32,7 @@
     background-color: #2e6ca4;
 }
 .icon{
-    color: #2e6ca4;
+    color: #2e6ca4 !important;
 }
 
 /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */

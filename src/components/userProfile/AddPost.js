@@ -20,12 +20,13 @@ import { IoIosAlert } from "react-icons/io";
 import { FaSmile } from "react-icons/fa";
 import { MdBrowserUpdated } from "react-icons/md";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { RiArrowGoBackFill } from "react-icons/ri";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "./UserProfile.css";
 
-import {baseURL} from "../../api/api"
-const apiBaseUrl = baseURL 
+import { baseURL } from "../../api/api";
+const apiBaseUrl = baseURL;
 
 const AddPost = () => {
   const [offerTitle, setOfferTitle] = useState("");
@@ -45,7 +46,7 @@ const AddPost = () => {
 
   const [img, setImg] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  
+
   const userID = userData._id;
   // console.log(userID);
   const token = location.state?.token || localStorage.getItem("Token");
@@ -87,7 +88,7 @@ const AddPost = () => {
           toast.error("Please upload an image before publishing.");
           return;
         }
-  
+        setLoading(true);
         const offerPostData = {
           offerTitle,
           offerContent,
@@ -96,26 +97,24 @@ const AddPost = () => {
           userID,
         };
         // console.log(offerPostData)
-  
+
         const response = await axios.post(
           `${apiBaseUrl}/offers/offerpost`,
           offerPostData
         );
-  
+
         toast.success("Post published successfully!");
         navigate(`/userprofile/${userData._id}`);
       } catch (error) {
         // console.error("Error:", error);
         toast.error("Failed to publish post.");
+      } finally {
+        setLoading(false); // Set loading to false when data loading is complete
       }
     } else {
       toast.error("Please fill in all the required fields.");
     }
-
-    
   };
-
-
 
   const handleFileChange = (e) => {
     if (e.target.files[0]) {
@@ -137,7 +136,6 @@ const AddPost = () => {
         setImageUrl(downloadURL);
         setImageUploaded(true);
         toast.success("Image uploaded successfully!");
-        
       } else {
         toast.error("No image selected.");
       }
@@ -155,8 +153,6 @@ const AddPost = () => {
       navigate("/login");
     } else {
       getUserData();
-      
-
     }
   }, [token]);
 
@@ -175,9 +171,7 @@ const AddPost = () => {
               <div className="card">
                 <h1 className="heading">Add Post</h1>
 
-                <Form
-                  className="container-lg  offer_form"
-                >
+                <Form className="container-lg  offer_form">
                   <div className="offer-form">
                     <Form.Group
                       controlId="formOfferTitle"
@@ -189,7 +183,7 @@ const AddPost = () => {
                         placeholder="Add Post Title"
                         name="offerTitle"
                         value={offerTitle}
-                         onChange={(e) => setOfferTitle(e.target.value)}
+                        onChange={(e) => setOfferTitle(e.target.value)}
                         style={{ border: " 1px solid #2e6ca4" }}
                       />
                     </Form.Group>
@@ -247,7 +241,10 @@ const AddPost = () => {
                   </div> */}
 
                   <div className="offer-form">
-                    <Form.Group controlId="formImageUpload" style={{ textAlign: "left" }}>
+                    <Form.Group
+                      controlId="formImageUpload"
+                      style={{ textAlign: "left" }}
+                    >
                       <Form.Label>Offer Ads Image*</Form.Label>
                       <InputGroup className="mb-3">
                         <FormControl
@@ -256,17 +253,18 @@ const AddPost = () => {
                           onChange={handleFileChange}
                           style={{ border: "1px solid #2e6ca4" }}
                           // style={{ border: isUploading ? "1px solid #2e6ca4" : (imageUploaded ? "1px solid green" : "1px solid red") }}
-
                         />
                         <InputGroup.Text
                           className="icon"
-                          style={{ cursor: "pointer", border: "1px solid #2e6ca4" }}
+                          style={{
+                            cursor: "pointer",
+                            border: "1px solid #2e6ca4",
+                          }}
                           onClick={!isUploading ? uploadImage : null}
                           disabled={isUploading}
                         >
                           {isUploading ? (
-                            <AiOutlineLoading3Quarters 
-                            className="rotating-icon" />
+                            <AiOutlineLoading3Quarters className="rotating-icon" />
                           ) : (
                             <MdBrowserUpdated
                               style={{ fontSize: "25px", cursor: "pointer" }}
@@ -278,24 +276,23 @@ const AddPost = () => {
                       </InputGroup>
                       {/* Additional UI for showing success message */}
                       {imageUploaded && (
-                      <div className="alert-container">
-                        <p className="alert-msg" style={{ color: "green" }}>
-                          Image Uploaded Successful
-                        </p>
-                        <FaSmile
-                          style={{ color: "green", marginLeft: "5px" }}
-                        />
-                        {/* <img
+                        <div className="alert-container">
+                          <p className="alert-msg" style={{ color: "green" }}>
+                            Image Uploaded Successful
+                          </p>
+                          <FaSmile
+                            style={{ color: "green", marginLeft: "5px" }}
+                          />
+                          {/* <img
                           src={imageUrl}
                           alt="Uploaded Profile"
                           className="uploaded-image"
                           style={{width:"30px"}}
                         /> */}
-                      </div>
-                    )}
+                        </div>
+                      )}
                     </Form.Group>
                   </div>
-                 
 
                   <Button
                     variant="primary"
@@ -305,20 +302,29 @@ const AddPost = () => {
                     onClick={!isLoading ? handlePublish : null}
                     disabled={isLoading}
                   >
-                    {isLoading ? "Loading..." : "Publish"}
+                    {isLoading ? (
+                      <>
+                        <span
+                          className="spinner-border spinner-border-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>{" "}
+                        Publishing...
+                      </>
+                    ) : (
+                      "Publish"
+                    )}
                   </Button>
-
-                  {/* <Button
-                    variant="primary"
-                    className="button"
-                    style={{ margin: "20px 0px 20px 0px" }}
-                    type="submit"
-                    onClick={!isLoading ? handleUpdate : null}
-                    disabled={isLoading}
-                  >
-                    {isLoading ? "Loading..." : "Update"}
-                  </Button> */}
                 </Form>
+                <div className="text-center mt-3">
+                  <Link
+                    style={{ fontSize: "15px", textDecoration: "underline" }}
+                    to={`/userprofile/${userData._id}`}
+                  >
+                    <RiArrowGoBackFill style={{ fontSize: "20px" }} /> Back to
+                    Profile
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

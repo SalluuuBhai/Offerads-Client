@@ -95,12 +95,12 @@ const UserProfile = () => {
         const response = await axios.delete(
           `${apiBaseUrl}/offers/deleteoffer/${offerId}`
         );
-        console.log(response.data);
+        // console.log(response.data);
         toast.success(response.data.message);
         getOfferData();
       } catch (error) {
         toast.error(error.response.data.message);
-        console.error("Error deleting offer:", error);
+        // console.error("Error deleting offer:", error);
       }
     }
   };
@@ -113,7 +113,7 @@ const UserProfile = () => {
       toast.error(error.response.data.message);
       logOut();
     } else {
-      console.error("Error:", error);
+      // console.error("Error:", error);
     }
   };
 

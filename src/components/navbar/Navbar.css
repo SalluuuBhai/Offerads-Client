@@ -1,3 +1,40 @@
+/* Add this to your existing CSS or create a new CSS file */
+.navbar-dark .navbar-toggler-icon {
+  background-color: #000; /* Set the background color to black */
+}
+
+.navbar-dark .navbar-toggler:focus,
+.navbar-dark .navbar-toggler:hover {
+  background-color: #000; /* Set the background color to black on focus/hover */
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #df3535; /* Set the text color to white */
+}
+
+.navbar-dark .navbar-nav .nav-link:focus,
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: #e63838; /* Set the text color to a lighter shade on focus/hover */
+}
+
+.navbar-dark .navbar-nav .show > .nav-link,
+.navbar-dark .navbar-nav .active > .nav-link,
+.navbar-dark .navbar-nav .nav-link.show,
+.navbar-dark .navbar-nav .nav-link.active {
+  color: #e04141; /* Set the text color for active and open dropdown items */
+}
+
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+  background-color: #000; /* Set the background color of the dropdown menu to black on hover */
+}
+
+.navbar-dark .navbar-nav .nav-item.dropdown:hover .nav-link {
+  color: #e63535; /* Set the text color of the dropdown toggle on hover */
+}
+
+.navbar-dark .navbar-nav .nav-item.dropdown.show .nav-link {
+  color: #e72c2c; /* Set the text color of the dropdown toggle when the dropdown is open */
+}
 
 
 .home,

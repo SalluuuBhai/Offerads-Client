@@ -11,41 +11,35 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { MdOutlineAlternateEmail } from "react-icons/md";
-import { forgotPassword } from "../../api/api";
-import offerads from "../../assets/Offerads.png";
 import { IoIosAlert } from "react-icons/io";
 import axios from "axios";
 import { toast } from "react-toastify";
-import {baseURL} from "../../api/api"
+import { baseURL } from "../../api/api";
+import offerads from "../../assets/Offerads.png";
 
-const apiBaseUrl = baseURL 
+const apiBaseUrl = baseURL;
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(true);
-  const [showAlert, setShowAlert] = useState(false);
-
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) {
-      // alert("Please fill in all the required fields.");
       toast.error("Please fill in all the required fields.");
-      // setShowAlert(true);
     } else {
-
+      setLoading(true);
 
       let payload = { email };
       try {
-        let res = await axios.post(
-          `${apiBaseUrl}/users/forgot-password`,
-          payload
-        );
-        // console.log(res);
+        let res = await axios.post(`${apiBaseUrl}/users/forgot-password`, payload);
         localStorage.setItem("resetToken", res.data.token);
         toast.success(res.data.message);
       } catch (error) {
         toast.error(error.response.data.message);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -54,6 +48,7 @@ const ForgotPassword = () => {
     setEmail(event.target.value);
     setIsValidEmail(validateEmail(event.target.value));
   };
+
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -108,10 +103,21 @@ const ForgotPassword = () => {
                     variant="primary"
                     className="button"
                     type="submit"
-                    disabled={!isValidEmail}
+                    disabled={!isValidEmail || loading}
                     onClick={handleSubmit}
                   >
-                    Submit
+                    {loading ? (
+                      <>
+                        <span
+                          className="spinner-border spinner-border-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>{" "}
+                        Loading...
+                      </>
+                    ) : (
+                      "Submit"
+                    )}
                   </Button>
                 </Form>
 

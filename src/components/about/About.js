@@ -6,8 +6,8 @@ import Alert from '../alert/Alert'
 const About = () => {
   return (
     <>
-    <CollapsibleExample />
-    {/* <BasicExample /> */}
+    {/* <CollapsibleExample /> */}
+    <BasicExample />
     {/* <Alert /> */}
     <div>About us Will Update soon</div>
     </>

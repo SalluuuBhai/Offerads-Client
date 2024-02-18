@@ -36,6 +36,7 @@ const ResetPassword = () => {
   const [isValidPassword, setIsValidPassword] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+  const [loading, setLoading] = useState(false); 
   const { id } = useParams();
   const navigate = useNavigate();
   // Function to handle form submission
@@ -46,6 +47,7 @@ const ResetPassword = () => {
       // alert("Please fill in all the required fields !");
       toast.error("Please fill in all the required fields.");
     } else {
+      setLoading(true);
       // console.log(password);
       let payload = { password };
       let resetToken = localStorage.getItem("resetToken");
@@ -64,6 +66,8 @@ const ResetPassword = () => {
         navigate("/login");
       } catch (error) {
         toast.error(error.response.data.message);
+      } finally {
+        setLoading(false); // Set loading to false when data loading is complete
       }
     }
   };
@@ -206,10 +210,21 @@ const ResetPassword = () => {
                     className="button"
                     type="submit"
                     onClick={handleSubmit}
-                    disabled={!isValidPassword || !passwordMatch}
+                    disabled={!isValidPassword || !passwordMatch || loading} // Disable the button when loading is true
                     style={{ marginBottom: "25px" }}
                   >
-                    Submit
+                    {loading ? (
+                      <>
+                        <span
+                          className="spinner-border spinner-border-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>{" "}
+                        Loading...
+                      </>
+                    ) : (
+                      "Submit"
+                    )}
                   </Button>
                 </Form>
               </div>

@@ -31,17 +31,17 @@ const UserQRCode = () => {
   const [qrData, setQrData] = useState("");
 
   const userID = userData._id;
-  console.log(userID);
+  // console.log(userID);
 
   const token = location.state?.token || localStorage.getItem("Token");
-  console.log(token);
+  // console.log(token);
 
   const getUserData = async () => {
     try {
       const response = await axios.get(`${apiBaseUrl}/users/getuser`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(response);
+      // console.log(response);
       // toast.success(response.data.message);
       setUserData(response.data.user);
     } catch (error) {
@@ -54,7 +54,7 @@ const UserQRCode = () => {
     try {
       const url = `https://api.qrserver.com/v1/create-qr-code/?size=150%C3%97150&data=${URL}/offerview/${userID}`;
       setImg(url);
-      console.log(url);
+      // console.log(url);
       // const updatedUserData = {
       //   userQRCode:url, id:userID
       // }
@@ -70,7 +70,7 @@ const UserQRCode = () => {
       );
       toast.success("QR Code Generate Successful");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // toast.error("QR Code Generate Error");
     }
   }
@@ -83,7 +83,7 @@ const UserQRCode = () => {
         await generateQR();
       } catch (error) {
         // Handle error if any
-        console.error(error);
+        // console.error(error);
       }
     };
 
@@ -101,19 +101,34 @@ const UserQRCode = () => {
 
   const handleDownloadQRCode = () => {
     fetch(img)
-      .then((response) => response.blob())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch image. Status: ${response.status}`);
+        }
+        return response.blob();
+      })
       .then((blob) => {
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = `qrcode/${userID}.png`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        const reader = new FileReader();
+        reader.onload = () => {
+          const dataURL = reader.result;
+  
+          const link = document.createElement("a");
+          link.href = dataURL;
+          link.download = `qrcode_${userID}.png`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        };
+  
+        reader.readAsDataURL(blob);
       })
       .catch((error) => {
-        console.error(error);
+        console.error("Error downloading QR code:", error);
       });
   };
+  
+  
+  
 
   return (
     <>
@@ -167,35 +182,3 @@ const UserQRCode = () => {
 };
 
 export default UserQRCode;
-
-
-// router.put('/update-profile', async (req, res) => {
-//   try {
-//     // Assume you have some form of authentication to identify the user (e.g., JWT)
-//     const userId = req.body.id;
-
-//     // Find the user by ID
-//     const existingUser = await UserModel.findById(userId);
-
-//     if (existingUser) {
-//       // Update user details
-//       existingUser.shopName = req.body.shopName || existingUser.shopName;
-//       existingUser.shopAddress = req.body.shopAddress || existingUser.shopAddress;
-//       existingUser.shopLocation = req.body.shopLocation || existingUser.shopLocation;
-//       existingUser.mobileNumber = req.body.mobileNumber || existingUser.mobileNumber;
-//       existingUser.userQRCode = req.body.userQRCode || existingUser.userQRCode;
-//       existingUser.profilePicture = req.body.profilePicture || existingUser.profilePicture
-//       // Add other fields that you want to update
-
-//       // Save the updated user
-//       const updatedUser = await existingUser.save();
-
-//       res.status(200).send({ message: 'User profile updated successfully.', user: updatedUser });
-//     } else {
-//       res.status(404).send({ message: 'User not found.' });
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send({ message: 'Internal Server Error', error: error.message });
-//   }
-// });

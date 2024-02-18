@@ -20,8 +20,8 @@ import {
   FormControl,
   Alert,
 } from "react-bootstrap";
-import ReactCrop from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 import { BsShop } from "react-icons/bs";
 import {
   MdAddBusiness,
@@ -60,8 +60,8 @@ import { RiArrowGoBackFill } from "react-icons/ri";
 
 import "./UserProfile.css";
 
-import {baseURL} from "../../api/api"
-const apiBaseUrl = baseURL 
+import { baseURL } from "../../api/api";
+const apiBaseUrl = baseURL;
 
 // const { createVerificationToken } = require("../../utils/tokenUtils");
 
@@ -98,14 +98,14 @@ const UpdateProfile = () => {
 
   // file crop
   const [file, setFile] = useState(null);
-  const [crop, setCrop] = useState({ unit: '%', width: 30, aspect: 1 });
+  const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 1 });
   const [imageRef, setImageRef] = useState(null);
   const [croppedImageUrl, setCroppedImageUrl] = useState(null);
 
   const userID = userData._id;
-  console.log(userID);
+  // console.log(userID);
   const token = location.state?.token || localStorage.getItem("Token");
-  console.log(token);
+  // console.log(token);
 
   useEffect(() => {
     if (!token) {
@@ -172,11 +172,10 @@ const UpdateProfile = () => {
         profilePicture: imageUrl, // Updated profile picture URL
       };
       console.log(shopName, shopAddress);
-      const response = await axios.put(
-        `${apiBaseUrl}/users/update-profile`,
-        { updatedUserData, id: userID }
-        
-      );
+      const response = await axios.put(`${apiBaseUrl}/users/update-profile`, {
+        updatedUserData,
+        id: userID,
+      });
 
       console.log("Update response:", response.data);
       console.log("imageUrl:", imageUrl);
@@ -192,7 +191,6 @@ const UpdateProfile = () => {
       setLoading(false);
     }
   };
-
 
   return (
     <>
@@ -470,19 +468,29 @@ const UpdateProfile = () => {
                     onClick={!isLoading ? updateUserProfile : null}
                     disabled={isLoading}
                   >
-                    {isLoading ? "Loading..." : "Update"}
+                    {isLoading ? (
+                      <>
+                        <span
+                          className="spinner-border spinner-border-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>{" "}
+                        Updating...
+                      </>
+                    ) : (
+                      "Update"
+                    )}
                   </Button>
                 </Form>
-                {/* <div className="text-center mt-3">
+                <div className="text-center mt-3">
                   <Link
-                    style={{ fontSize: "15px", textDecoration: "none" }}
-                    to="/userprofile/:id"
+                    style={{ fontSize: "15px", textDecoration: "underline" }}
+                    to={`/userprofile/${userData._id}`}
                   >
-                    {" "}
-                    <RiArrowGoBackFill style={{ fontSize: "20px" }} />
-                    Back to Profile{" "}
+                    <RiArrowGoBackFill style={{ fontSize: "20px" }} />{" "}
+                    Back to Profile
                   </Link>
-                </div> */}
+                </div>
               </div>
             </div>
           </div>

@@ -6,8 +6,8 @@ import Alert from '../alert/Alert'
 const Offers = () => {
   return (
     <>
-    <CollapsibleExample />
-    {/* <BasicExample /> */}
+    {/* <CollapsibleExample /> */}
+    <BasicExample />
     <Alert title="Offer Closed Soon" message="Hurry Up"  />
     <div>Offers Will Update soon</div>
     </>

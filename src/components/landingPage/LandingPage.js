@@ -31,8 +31,8 @@ const LandingPage = () => {
   return (
     <>
     
-      {/* <BasicExample /> */}
-      <CollapsibleExample />
+      <BasicExample />
+      {/* <CollapsibleExample /> */}
       
       
 
