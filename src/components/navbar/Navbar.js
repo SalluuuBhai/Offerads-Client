@@ -42,6 +42,7 @@ function BasicExample() {
         onClick={toggleNavbar}
         style={{
           color: 'black',
+          transition: 'color 0.3s ease',
         }}
       >
         {isNavbarExpanded ? (
@@ -50,6 +51,7 @@ function BasicExample() {
               color: '#2e6ca4',
               fontSize: '50px',
               cursor: 'pointer',
+              transition: 'color 0.3s ease, transform 0.3s ease',
             }}
           />
         ) : (
@@ -58,6 +60,7 @@ function BasicExample() {
               color: '#2e6ca4',
               fontSize: '50px',
               cursor: 'pointer',
+              transition: 'color 0.3s ease, transform 0.3s ease',
             }}
           />
         )}
