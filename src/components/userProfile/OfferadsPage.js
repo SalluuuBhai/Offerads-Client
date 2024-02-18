@@ -280,7 +280,7 @@ const Offerads = () => {
                                     }}
                                   >
                                     {new Date(
-                                      userData.createdAt
+                                      offer.createdAt
                                     ).toLocaleDateString("en-GB")}
                                   </p>
                                 </div>
