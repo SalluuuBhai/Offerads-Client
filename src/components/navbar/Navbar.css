@@ -36,6 +36,9 @@
   color: #e72c2c; /* Set the text color of the dropdown toggle when the dropdown is open */
 }
 
+.navbar-1{
+  height: fit-content;
+}
 
 .home,
 .offers,

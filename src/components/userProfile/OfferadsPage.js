@@ -327,7 +327,7 @@ const Offerads = () => {
                                   style={{
                                     width: "100%",
                                     maxHeight: "400px", // Set a maximum height for the offer image
-                                    objectFit: "none", // Maintain aspect ratio and cover the container
+                                    objectFit: "cover", // Maintain aspect ratio and cover the container
                                     cursor: "pointer",
                                     filter:
                                       getDaysLeft(offer.offerValidity) < 0
