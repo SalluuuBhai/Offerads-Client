@@ -100,13 +100,16 @@ const Register = () => {
         } catch (error) {
           console.log("Registration error:", error.response.data.message);
           toast.error(error.response.data.message);
+          setLoading(false);
         }
       } else {
         console.log("Invalid email or password");
         toast.error("Invalid email or password");
+        setLoading(false);
       }
     } else {
       toast.error("Please fill in all the required fields.");
+      setLoading(false);
     }
   };
 
