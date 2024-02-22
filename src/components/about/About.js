@@ -17,6 +17,64 @@ const About = () => {
 export default About
 
 // import React, { useState } from 'react';
+
+// const MobileNumberForm = () => {
+//   const [mobileNumber, setMobileNumber] = useState('');
+//   const [isValidMobileNumber, setIsValidMobileNumber] = useState(true);
+
+//   const handleMobileNumberChange = (e) => {
+//     const inputValue = e.target.value;
+
+//     // Check if the value is numeric and within the specified limit
+//     if ( inputValue.length <= 10) {
+//       setMobileNumber(inputValue);
+//       setIsValidMobileNumber(false);
+//     } else {
+//       setIsValidMobileNumber(true);
+//     }
+//   };
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+
+//     // Perform any action with the valid mobile number, e.g., send it to the server
+//     if (isValidMobileNumber) {
+//       console.log('Valid mobile number:', mobileNumber);
+//       // Add your logic here, such as sending the mobile number to the server
+//     } else {
+//       console.log('Invalid mobile number. Please correct the input.');
+//     }
+//   };
+
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <label>
+//         Enter your Mobile Number:
+//         <input
+//           type="number"
+//           placeholder="Enter your Mobile Number"
+//           value={mobileNumber}
+//           onChange={handleMobileNumberChange}
+//           // maxLength={10}
+//         />
+//       </label>
+//       {!isValidMobileNumber && (
+//         <div style={{ color: 'red' }}>
+//           Please enter a valid 10-digit mobile number.
+//         </div>
+//       )}
+//       <br />
+//       <button type="submit" disabled={!isValidMobileNumber}>
+//         Submit
+//       </button>
+//     </form>
+//   );
+// };
+
+// export default MobileNumberForm;
+
+
+// import React, { useState } from 'react';
 // import ReactCrop from 'react-image-crop';
 // import 'react-image-crop/dist/ReactCrop.css';
 // import { FormControl } from 'react-bootstrap';

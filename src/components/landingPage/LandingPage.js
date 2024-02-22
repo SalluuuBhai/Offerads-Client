@@ -11,8 +11,8 @@ import logo08 from "../../assets/logo08.png";
 import logo09 from "../../assets/logo09.png";
 import "./LandingPage.css";
 import BasicExample from "../navbar/Navbar";
-import CollapsibleExample from "../navbar/Navbar1"
-import Header from "../header/Header"
+import CollapsibleExample from "../navbar/Navbar1";
+import Header from "../header/Header";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import {
@@ -30,12 +30,8 @@ const currentYear = new Date().getFullYear();
 const LandingPage = () => {
   return (
     <>
-    
       <BasicExample />
       {/* <CollapsibleExample /> */}
-      
-      
-
 
       <div className="bg-image">
         <img src={img01} className="img-fluid" alt="Sample" />
@@ -44,12 +40,15 @@ const LandingPage = () => {
             <div className="row">
               <div className="col-xs-12 text-left">
                 <h1 className="text-uppercase text-white mb-0">
-                  It looks like it's <br className="hidden-xs" style={{color:"green"}}/>
+                  It looks like it's
+                </h1>
+                <h1 className="text-uppercase mb-0" style={{ color: "#38E54D" }}>
                   been furnished
-                  <br className="hidden-xs" />
-                  by
-                  <span className="clr">discount</span>
-                  <br className="hidden-xs" />
+                </h1>
+                <h1 className="text-uppercase text-white mb-0">
+                  by discount
+                </h1>
+                <h1 className="text-uppercase text-white mb-0">
                   stores.
                 </h1>
                 <MDBBtn
@@ -115,8 +114,6 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-
-      
 
       <MDBFooter
         className="text-center text-white"

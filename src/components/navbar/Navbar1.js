@@ -1,60 +1,115 @@
-import { Link } from "react-router-dom";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+import React, { useState } from 'react';
+import { Navbar, Container, Nav } from 'react-bootstrap';
+import { Link as RouterLink } from 'react-router-dom';
+import { FaArrowDownWideShort } from "react-icons/fa6";
+import { FaArrowUpWideShort } from "react-icons/fa6";
+import { Link, animateScroll as scroll } from 'react-scroll';
 import Offeradslogo from "../../assets/Offerads-logo.webp";
 
-function CollapsibleExample() {
+
+const CollapsibleExample = () => {
+  const [isNavbarExpanded, setNavbarExpanded] = useState(false);
+
+  const toggleNavbar = () => {
+    setNavbarExpanded(!isNavbarExpanded);
+  };
+
+  const scrollToTop = () => {
+    scroll.scrollToTop();
+  };
+
   return (
-    <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
+    <Navbar
+      expand="lg"
+      className="navbar-1 navbar text-dark"
+      style={{
+        backgroundColor: "#F0F3FF",
+        borderBottom: "1px solid #2e6ca4",
+        fontFamily: "Barlow Condensed, sans-serif",
+        fontWeight: "600",
+        fontStyle: "normal",
+      }}
+    >
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand>
           <img
             src={Offeradslogo}
-            width="150"
-            //   height="30"
-            className="d-inline-block align-top"
-            alt="React Bootstrap logo"
+            to="/"
+            alt="Offerads Logo"
+            className="img-fluid"
+            style={{ width: "235px", height: "70px", objectFit: "none" }}
           />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto" style={{gap:"20px"}}>
-          <Link to="/" className="home">
+        <Navbar.Toggle
+          aria-controls="basic-navbar-nav"
+          onClick={toggleNavbar}
+          style={{
+            color: 'black',
+            transition: 'color 0.3s ease',
+          }}
+        >
+          {isNavbarExpanded ? (
+            <FaArrowUpWideShort
+              style={{
+                color: '#2e6ca4',
+                fontSize: '50px',
+                cursor: 'pointer',
+                transition: 'color 0.3s ease, transform 0.3s ease',
+              }}
+            />
+          ) : (
+            <FaArrowDownWideShort
+              style={{
+                color: '#2e6ca4',
+                fontSize: '50px',
+                cursor: 'pointer',
+                transition: 'color 0.3s ease, transform 0.3s ease',
+              }}
+            />
+          )}
+        </Navbar.Toggle>
+
+        <Navbar.Collapse
+          id="basic-navbar-nav"
+          className={`nav-grps justify-content-around ${isNavbarExpanded ? 'show' : ''}`}
+          style={{
+            color: "#2e6ca4",
+            borderColor: "grey",
+            transition: 'max-height 0.3s ease, opacity 0.3s ease',
+            maxHeight: isNavbarExpanded ? '1000px' : '0',
+            opacity: isNavbarExpanded ? '1' : '0',
+            overflow: 'hidden',
+          }}
+        >
+          <Nav className="nav-links justify-content-around">
+            <Link to="home" smooth={true} duration={500} className="home">
               Home
             </Link>
-            <Link to="/offers" className="offers">
+          </Nav>
+          <Nav className="nav-links justify-content-around">
+            <Link to="offers" smooth={true} duration={500} className="offers">
               Offers
             </Link>
-            <Link to="/about" className="about">
+          </Nav>
+          <Nav className="nav-links justify-content-around">
+            <Link to="about" smooth={true} duration={500} className="about">
               About
             </Link>
-            {/* <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown> */}
           </Nav>
-          <Nav className="nav-links" style={{gap:"20px"}}>
-            <Link to="/login" variant="outline-danger" className="login">
+          <Nav className="nav-links justify-content-around">
+            <RouterLink to="/login" className="login">
               Login
-            </Link>
-            <Link to="/register" variant="danger" className="register ">
-              Register
-            </Link>
+            </RouterLink>
           </Nav>
-          
+          <Nav className="nav-links justify-content-around">
+            <RouterLink to="/register" className="register">
+              Register
+            </RouterLink>
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
-}
+};
 
 export default CollapsibleExample;
