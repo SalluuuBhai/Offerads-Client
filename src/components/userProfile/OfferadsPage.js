@@ -158,6 +158,7 @@ const Offerads = () => {
                           style={{
                             width: "100px",
                             height: "100px",
+                            objectFit: "cover",
                             borderRadius: "50%",
                             marginRight: "7px",
                             border: "2px solid #F0F3FF",
@@ -261,6 +262,7 @@ const Offerads = () => {
                                     width: "70px",
                                     height: "70px",
                                     borderRadius: "50%",
+                                    objectFit: "cover",
                                     marginRight: "12px",
                                     border: "2px solid #2e6ca4",
                                   }}

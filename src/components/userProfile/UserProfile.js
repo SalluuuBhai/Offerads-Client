@@ -190,8 +190,9 @@ const UserProfile = () => {
                       alt="Shop Image"
                       className="img-fluid  mt-4 mb-2"
                       style={{
-                        width: "120px",
-                        height: "120px",
+                        width: "100%",
+                        height: "100%",
+                        minHeight: "120px",
                         zIndex: 1,
                         borderRadius: "50%",
                         objectFit: "cover",

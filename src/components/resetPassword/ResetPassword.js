@@ -153,7 +153,7 @@ const ResetPassword = () => {
                       <div className="alert-container">
                         <IoIosAlert className="alert-icon" />
                         <p className="alert-msg" style={{ color: "red" }}>
-                          Password Week !
+                          Password Weak !
                         </p>
                       </div>
                     )}
