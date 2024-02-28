@@ -23,6 +23,8 @@ import { toast } from "react-toastify";
 import ReactConfetti from "react-confetti";
 
 import {baseURL} from "../../api/api"
+import SubscribeAlert from "../alert/Subscribe";
+// import Alert from "../alert/Alert";
 const apiBaseUrl = baseURL 
 
 const Offerads = () => {
@@ -36,6 +38,8 @@ const Offerads = () => {
   const [visitCount, setVisitCount] = useState(0);
   const [img, setImg] = useState("");
   const [qrData, setQrData] = useState("");
+  const [showSubscribeAlert, setShowSubscribeAlert] = useState(false);
+
 
   const handleLikeClick = () => {
     setLiked(!liked);
@@ -106,6 +110,16 @@ const Offerads = () => {
     }
   }, [userData._id]);
 
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setShowSubscribeAlert(true);
+    }, 10000);
+
+    return () => clearTimeout(timerId); // Clear the timeout on component unmount
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); 
+
   return (
     <>
       {loading ? (
@@ -130,6 +144,9 @@ const Offerads = () => {
               style={{ width: "130px", marginBottom: "10px" }}
             />
             <div className="row d-flex justify-content-center align-items-center h-100">
+            {showSubscribeAlert && <SubscribeAlert title={userData.shopName} userId={userID} />}
+
+             
               <div className="col col-lg-9 col-xl-7" style={{ padding: "5px" }}>
                 <div
                   style={{
