@@ -20,6 +20,9 @@ const SubscribeAlert = ({ title }) => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [subscriptionMessage, setSubscriptionMessage] = useState("");
+  const [subscriptionMessage2, setSubscriptionMessage2] = useState("");
+  const [showDiv1, setShowDiv1] = useState(false);
+  // const [showDiv2, setShowDiv2] = useState(false);
 
   const handleSubscribe = async (e) => {
     e.preventDefault();
@@ -28,24 +31,28 @@ const SubscribeAlert = ({ title }) => {
         userID,
         userName: userName,
         mobileNumber: mobileNumber,
+        shopName: title,
       };
-      console.log(customerData);
+      // console.log(customerData);
       try {
         const response = await axios.post(
           `${apiBaseUrl}/customer/customerdetails`,
           customerData
         );
-        if (response.status === 201) {
-        //   console.log(response.data.message); // Log the success message
+      
+        if (response && response.status === 201) {
+          // Corrected: Use setShowDiv1 instead of showDiv1
+          setShowDiv1(true);
           setSubscriptionMessage(response.data.message);
         } else {
-        //   console.log(response.data.message); // Log the error message
-          setSubscriptionMessage(response.data.message);
+          setSubscriptionMessage(response ? response.data.message : "Unknown error");
         }
+      
         // Handle the response as needed
       } catch (error) {
-        console.error("Error during subscription:", error);
-        setSubscriptionMessage(error.response.data.message); // Use error.response.data.message
+        // showDiv2(true)
+        // console.error("Error during subscription:", error);
+        setSubscriptionMessage(error.response ? error.response.data.message : "Unknown error");
         // Handle errors here
       }
     }
@@ -96,19 +103,25 @@ const SubscribeAlert = ({ title }) => {
         <button className="close-button" onClick={() => setShowModal(false)}>
           <IoCloseSharp />
         </button>
-
         {submitted ? (
-          <div>
-            <ReactConfetti style={{ width: "380px", height: "400px" }} />
-            <h5 className="heading" style={{ margin: "15px 0px" }}>
-              Thank you for subscribing!
-            </h5>
-            <p>
-              Your subscription is confirmed. You will receive updates from{" "}
-              {title}'s offers.
-            </p>
-            <p>{subscriptionMessage}</p>
-          </div>
+          showDiv1 ? (
+            <div>
+              <ReactConfetti style={{ width: "380px", height: "400px" }} />
+              <h5 className="heading" style={{ margin: "15px 0px" }}>
+                Thank you for subscribing!
+              </h5>
+              <p>
+                Your subscription is confirmed. You will receive updates from{" "}
+                {title}'s offers.
+              </p>
+              <p>{subscriptionMessage}</p>
+            </div>
+          ) : (
+            <>
+            <p style={{marginTop:"30%"}}>{subscriptionMessage}</p>
+            <p>Thank You...</p>
+            </>
+          )
         ) : (
           <>
             <h5 style={{ margin: "15px 0px" }}>
