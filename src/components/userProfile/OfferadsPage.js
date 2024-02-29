@@ -493,9 +493,9 @@ const Offerads = () => {
                     )}
                   </div>
 
-                  <div>
+                  {/* <div>
                     <p>Client's IP Address is {ipAddress || "Loading..."}</p>
-                  </div>
+                  </div> */}
 
                 </div>
               </div>
