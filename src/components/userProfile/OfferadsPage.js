@@ -22,10 +22,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import ReactConfetti from "react-confetti";
 
-import {baseURL} from "../../api/api"
+import { baseURL } from "../../api/api";
 import SubscribeAlert from "../alert/Subscribe";
 // import Alert from "../alert/Alert";
-const apiBaseUrl = baseURL 
+const apiBaseUrl = baseURL;
 
 const Offerads = () => {
   const { id } = useParams();
@@ -39,7 +39,7 @@ const Offerads = () => {
   const [img, setImg] = useState("");
   const [qrData, setQrData] = useState("");
   const [showSubscribeAlert, setShowSubscribeAlert] = useState(false);
-
+  const [ipAddress, setIpAddress] = useState(null);
 
   const handleLikeClick = () => {
     setLiked(!liked);
@@ -118,7 +118,23 @@ const Offerads = () => {
     return () => clearTimeout(timerId); // Clear the timeout on component unmount
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); 
+  }, []);
+
+  useEffect(() => {
+    const fetchIpAddress = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:8000/customer/getIpAddress"
+        );
+        const data = await response.json();
+        setIpAddress(data.ip);
+      } catch (error) {
+        console.error("Error fetching IP address:", error);
+      }
+    };
+
+    fetchIpAddress();
+  }, []);
 
   return (
     <>
@@ -144,9 +160,10 @@ const Offerads = () => {
               style={{ width: "130px", marginBottom: "10px" }}
             />
             <div className="row d-flex justify-content-center align-items-center h-100">
-            {showSubscribeAlert && <SubscribeAlert title={userData.shopName} userId={userID} />}
+              {showSubscribeAlert && (
+                <SubscribeAlert title={userData.shopName} userId={userID} />
+              )}
 
-             
               <div className="col col-lg-9 col-xl-7" style={{ padding: "5px" }}>
                 <div
                   style={{
@@ -475,6 +492,11 @@ const Offerads = () => {
                       <p>No offers Posted!</p>
                     )}
                   </div>
+
+                  <div>
+                    <p>Client's IP Address is {ipAddress || "Loading..."}</p>
+                  </div>
+
                 </div>
               </div>
             </div>
