@@ -119,7 +119,7 @@ const SubscribeAlert = ({ title }) => {
           ) : (
             <>
             <p style={{marginTop:"25%"}}>{subscriptionMessage}</p>
-            <p>{title}'s offers.</p>
+            <p>in {title}'s offers.</p>
             <p>Thank You...</p>
             </>
           )
