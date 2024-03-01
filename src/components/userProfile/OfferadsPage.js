@@ -117,18 +117,18 @@ const Offerads = () => {
       setShowSubscribeAlert(true);
       console.log("Timer elapsed, setting showSubscribeAlert to true");
     }, 10000);
-  
+
     return () => {
       clearTimeout(timerId);
       console.log("Timer cleared");
     };
   }, []);
-  
-  const handleSubscribe = () =>{
-    console.log("Subscribe clicked")
-    
+
+  const handleSubscribe = () => {
+    console.log("Subscribe clicked");
+
     setShowSubscribeAlert(true);
-  }
+  };
   // useEffect(() => {
   //   // Your logic that depends on showSubscribeAlert
   //   console.log("showSubscribeAlert has changed:", showSubscribeAlert);
@@ -211,7 +211,6 @@ const Offerads = () => {
                             display: "flex",
                             flexDirection: "row",
                             alignItems: "center",
-                            
                           }}
                         >
                           <img
@@ -246,7 +245,7 @@ const Offerads = () => {
                                 fontSize: "1.1rem",
                                 // fontWeight: "bold",
                                 margin: "2px 0px",
-                                width:"100%",
+                                width: "100%",
                                 overflow: "hidden",
                                 textOverflow: "ellipsis",
                                 whiteSpace: "nowrap",
@@ -260,9 +259,16 @@ const Offerads = () => {
                             <p style={{ margin: "2px 0" }}>
                               <MdLocationPin /> {userData.shopLocation}
                             </p>
-                            <p style={{ margin: "1px 0" }}>
-                              <MdCall /> {userData.mobileNumber}
+                            <p style={{ margin: "1px 0", color: "white" }}>
+                              <MdCall />
+                              <a
+                                style={{ color: "white" }}
+                                href={`tel:+91${userData.mobileNumber}`}
+                              >
+                                {userData.mobileNumber}
+                              </a>
                             </p>
+
                             {/* Add more details as needed */}
                           </div>
                         </div>
@@ -277,10 +283,9 @@ const Offerads = () => {
                             padding: "10px 10px 10px 0px",
                             cursor: "pointer",
                             // position:"fixed"
-                            
                           }}
                           // onClick={() => {
-                            
+
                           //   console.log("Clicked on the bell icon");
                           //   setShowSubscribeAlert(true);
                           // }}
