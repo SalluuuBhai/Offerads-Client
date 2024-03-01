@@ -263,7 +263,7 @@ const Offerads = () => {
                               <MdCall />
                               <a
                                 style={{ color: "white" }}
-                                href={`tel:+91${userData.mobileNumber}`}
+                                href={`tel:+91${userData.mobileNumber}`}target="_blank"
                               >
                                 {userData.mobileNumber}
                               </a>
