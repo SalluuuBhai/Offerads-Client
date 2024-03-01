@@ -12,6 +12,8 @@ import {
 } from "react-bootstrap";
 import { MdLocationPin } from "react-icons/md";
 import { HiBuildingStorefront } from "react-icons/hi2";
+import { FaBell } from "react-icons/fa";
+
 import { MdCall } from "react-icons/md";
 import offerads from "../../assets/Offerads.png";
 import loader from "../../assets/loader.gif";
@@ -113,28 +115,44 @@ const Offerads = () => {
   useEffect(() => {
     const timerId = setTimeout(() => {
       setShowSubscribeAlert(true);
+      console.log("Timer elapsed, setting showSubscribeAlert to true");
     }, 10000);
-
-    return () => clearTimeout(timerId); // Clear the timeout on component unmount
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    const fetchIpAddress = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:8000/customer/getIpAddress"
-        );
-        const data = await response.json();
-        setIpAddress(data.ip);
-      } catch (error) {
-        console.error("Error fetching IP address:", error);
-      }
+  
+    return () => {
+      clearTimeout(timerId);
+      console.log("Timer cleared");
     };
-
-    fetchIpAddress();
   }, []);
+  
+  const handleSubscribe = () =>{
+    console.log("Subscribe clicked")
+    
+    setShowSubscribeAlert(true);
+  }
+  // useEffect(() => {
+  //   // Your logic that depends on showSubscribeAlert
+  //   console.log("showSubscribeAlert has changed:", showSubscribeAlert);
+  //   if (showSubscribeAlert) {
+  //     // Add your logic here
+  //     setShowSubscribeAlert(true);
+  //   }
+  // }, [showSubscribeAlert]);
+
+  // useEffect(() => {
+  //   const fetchIpAddress = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         "http://localhost:8000/customer/getIpAddress"
+  //       );
+  //       const data = await response.json();
+  //       setIpAddress(data.ip);
+  //     } catch (error) {
+  //       console.error("Error fetching IP address:", error);
+  //     }
+  //   };
+
+  //   fetchIpAddress();
+  // }, []);
 
   return (
     <>
@@ -181,53 +199,96 @@ const Offerads = () => {
                     style={{ marginBottom: "20px", backgroundColor: "#070F2B" }}
                   >
                     {userData ? (
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <img
-                          src={
-                            userData.profilePicture
-                              ? userData.profilePicture
-                              : profile
-                          }
-                          alt="Profile"
-                          style={{
-                            width: "100px",
-                            height: "100px",
-                            objectFit: "cover",
-                            borderRadius: "50%",
-                            marginRight: "7px",
-                            border: "2px solid #F0F3FF",
-                            margin: "10px",
-                          }}
-                        />
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                        }}
+                      >
                         <div
                           style={{
                             display: "flex",
-                            flexDirection: "column",
-                            alignItems: "flex-start",
-                            justifyContent: "flex-start",
-                            color: "white",
-                            padding: "10px 1px",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            
                           }}
                         >
-                          <h4
+                          <img
+                            src={
+                              userData.profilePicture
+                                ? userData.profilePicture
+                                : profile
+                            }
+                            alt="Profile"
                             style={{
-                              fontSize: "1.2rem",
-                              // fontWeight: "bold",
-                              margin: "2px 0px",
+                              width: "100px",
+                              height: "100px",
+                              objectFit: "cover",
+                              borderRadius: "50%",
+                              marginRight: "7px",
+                              border: "2px solid #F0F3FF",
+                              margin: "5px",
+                            }}
+                          />
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "flex-start",
+                              justifyContent: "flex-start",
+                              color: "white",
+                              padding: "10px 1px",
                             }}
                           >
-                            {userData.shopName}
-                          </h4>
-                          <p style={{ margin: "2px 0" }}>
-                            <HiBuildingStorefront /> {userData.shopAddress}
-                          </p>
-                          <p style={{ margin: "2px 0" }}>
-                            <MdLocationPin /> {userData.shopLocation}
-                          </p>
-                          <p style={{ margin: "1px 0" }}>
-                            <MdCall /> {userData.mobileNumber}
-                          </p>
-                          {/* Add more details as needed */}
+                            <h4
+                              style={{
+                                fontSize: "1.1rem",
+                                // fontWeight: "bold",
+                                margin: "2px 0px",
+                                width:"100%",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              {userData.shopName}
+                            </h4>
+                            <p style={{ margin: "2px 0" }}>
+                              <HiBuildingStorefront /> {userData.shopAddress}
+                            </p>
+                            <p style={{ margin: "2px 0" }}>
+                              <MdLocationPin /> {userData.shopLocation}
+                            </p>
+                            <p style={{ margin: "1px 0" }}>
+                              <MdCall /> {userData.mobileNumber}
+                            </p>
+                            {/* Add more details as needed */}
+                          </div>
+                        </div>
+
+                        <div
+                          style={{
+                            display: "flex",
+                            // flexDirection: "column",
+                            alignItems: "flex-end",
+                            justifyContent: "flex-end",
+                            color: "white",
+                            padding: "10px 10px 10px 0px",
+                            cursor: "pointer",
+                            // position:"fixed"
+                            
+                          }}
+                          // onClick={() => {
+                            
+                          //   console.log("Clicked on the bell icon");
+                          //   setShowSubscribeAlert(true);
+                          // }}
+                          onClick={handleSubscribe}
+                        >
+                          <FaBell
+                            style={{ color: "white", fontSize: "24px" }}
+                          />
                         </div>
                       </div>
                     ) : (
@@ -362,7 +423,7 @@ const Offerads = () => {
                                   alt="Offer"
                                   style={{
                                     width: "100%",
-                                    maxHeight: "400px", // Set a maximum height for the offer image
+                                    maxHeight: "100%", // Set a maximum height for the offer image
                                     objectFit: "cover", // Maintain aspect ratio and cover the container
                                     cursor: "pointer",
                                     filter:
@@ -496,7 +557,6 @@ const Offerads = () => {
                   {/* <div>
                     <p>Client's IP Address is {ipAddress || "Loading..."}</p>
                   </div> */}
-
                 </div>
               </div>
             </div>
