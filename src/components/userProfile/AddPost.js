@@ -274,6 +274,7 @@ const AddPost = () => {
                         <FormControl
                           className="form-control"
                           type="file"
+                          accept="image/*"
                           onChange={handleFileChange}
                           style={{ border: "1px solid #2e6ca4" }}
                           // style={{ border: isUploading ? "1px solid #2e6ca4" : (imageUploaded ? "1px solid green" : "1px solid red") }}

@@ -423,6 +423,7 @@ const UpdateProfile = () => {
                       <FormControl
                         className="form-control"
                         type="file"
+                        accept="image/*"
                         onChange={handleFileChange}
                       />
                       <InputGroup.Text
