@@ -361,13 +361,14 @@ const UserProfile = () => {
                       className="table-responsive"
                       style={{
                         maxHeight: "430px",
-                        border: "3px solid #EEF5FF",
+                        
+                        // border: "2px solid #2e6ca4",
                         // overflow: "scroll",
                         // scrollbarColor: "red orange",
                         scrollbarWidth: "thin",
                       }}
                     >
-                      <table className="table table-hover table-fluid">
+                      <table className="table table-hover table-fluid" >
                         <thead
                           style={{
                             position: "sticky",
@@ -407,6 +408,12 @@ const UserProfile = () => {
                               scope="col"
                               style={{ color: "#2e6ca4", padding: "10px" }}
                             >
+                              Offer Image
+                            </th>
+                            <th
+                              scope="col"
+                              style={{ color: "#2e6ca4", padding: "10px" }}
+                            >
                               Validity
                             </th>
                             <th
@@ -434,13 +441,23 @@ const UserProfile = () => {
                           Array.isArray(offerData) &&
                           offerData.length > 0 ? (
                             offerData.map((offer, index) => (
-                              <tr style={{ padding: "10px" }} key={offer._id}>
+                              <tr style={{ padding: "10px",  }} key={offer._id}>
                                 <td style={{ padding: "10px", fontWeight:"bold" }}>{index + 1}</td>
                                 <th style={{ padding: "10px" }} scope="row">
                                   {offer.offerID}
                                 </th>
                                 <td style={{ padding: "10px" }}>
                                   {offer.offerTitle}
+                                </td>
+                                <td style={{ padding: "10px" }}>
+                                  <img
+                                  src={offer.image}
+                                  style={{
+                                    width:"50px",
+                                    height:"50px",
+                                    objectFit:"cover"
+                                  }}
+                                  />
                                 </td>
                                 <td style={{ padding: "10px" }}>
                                   {new Date(
