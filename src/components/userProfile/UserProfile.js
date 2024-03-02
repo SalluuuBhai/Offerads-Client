@@ -76,7 +76,7 @@ const UserProfile = () => {
         `${apiBaseUrl}/offers/showoffer/${userID}`
       );
 
-      console.log("Offer Data :", response);
+      // console.log("Offer Data :", response);
       // toast.success(response.data.message);
       setOfferData(response.data.offersPosts);
 
@@ -360,7 +360,7 @@ const UserProfile = () => {
                     <div
                       className="table-responsive"
                       style={{
-                        maxHeight: "450px",
+                        maxHeight: "430px",
                         border: "3px solid #EEF5FF",
                         // overflow: "scroll",
                         // scrollbarColor: "red orange",
@@ -368,7 +368,7 @@ const UserProfile = () => {
                       }}
                     >
                       <table className="table table-hover table-fluid" >
-                        <thead>
+                        <thead style={{ position: "sticky", top: "0", zIndex: "1", background: "#fff" }}>
                           <tr>
                             <th scope="col" style={{ color: "#2e6ca4", maxWidth:"30px", padding:"10px" }}>
                               ID

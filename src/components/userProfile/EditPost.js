@@ -51,10 +51,10 @@ const EditPost = () => {
   const offerFullID = pathname.split("/")[2] || null;
   const _id = offerFullID.split("-")[0];
   const offerID = offerFullID.split("-")[1];
-  console.log(_id, offerID);
+//   console.log(_id, offerID);
 
   const userID = userData._id;
-  console.log(userID);
+//   console.log(userID);
   const token = location.state?.token || localStorage.getItem("Token");
   // console.log(token);
 
@@ -73,7 +73,7 @@ const EditPost = () => {
     };
   const getOfferData = async (offerID) => {
     try {
-      console.log(offerID);
+    //   console.log(offerID);
       const response = await axios.get(
         `${apiBaseUrl}/offers/getoffer/${offerID}`,
         {
@@ -81,7 +81,7 @@ const EditPost = () => {
         }
       );
       setOfferData(response.data.offer);
-      console.log(response.data.offer); // Log the offer data received
+    //   console.log(response.data.offer); // Log the offer data received
     } catch (error) {
       // Handle error, show toast, etc.
     }
@@ -210,11 +210,15 @@ const EditPost = () => {
                   </div>
 
                   <div className="offer-form">
+                    
                     <Form.Group
                       controlId="formOfferValidity"
                       style={{ textAlign: "left" }}
                     >
-                      <Form.Label>Offer Valid to*</Form.Label>
+                      <Form.Label>Offer Valid to* {"  "}<span style={{marginLeft:"20px", color:"#9BB8CD"}}>{new Date(
+                                      offerData.offerValidity
+                                    ).toLocaleDateString("en-GB")}</span></Form.Label>
+                      
                       <Form.Control
                         type="date"
                         placeholder="Write tour Content..."
@@ -263,7 +267,9 @@ const EditPost = () => {
                               src={offerData.image}
                               alt="Default Icon"
                               className="default-icon"
-                              style={{width:"40px"}}
+                              style={{width:"30px", overflow:"hidden", height:"30px",
+                            objectFit:""}}
+                              
                             />
                           </InputGroup.Text>
                         )}

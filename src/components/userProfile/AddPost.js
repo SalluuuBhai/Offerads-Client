@@ -47,6 +47,8 @@ const AddPost = () => {
   const [img, setImg] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
+  const [unsavedChanges, setUnsavedChanges] = useState(false);
+
   const userID = userData._id;
   // console.log(userID);
   const token = location.state?.token || localStorage.getItem("Token");
@@ -81,6 +83,7 @@ const AddPost = () => {
 
   const handlePublish = async (e) => {
     e.preventDefault();
+    setUnsavedChanges(false);
     if (offerTitle && offerContent && offerValidity) {
       try {
         // Check if the image is uploaded before attempting to publish
@@ -145,6 +148,27 @@ const AddPost = () => {
       // console.error(error);
       toast.error("Image upload failed");
       setUploading(false);
+    }
+  };
+
+  
+  const handleInputChange = () => {
+    setUnsavedChanges(true);
+  };
+
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
+  const handleBeforeUnload = (event) => {
+    if (unsavedChanges) {
+      const message = "You have unsaved changes. Are you sure you want to leave?";
+      event.returnValue = message; // Standard for most browsers
+      return message; // For some older browsers
     }
   };
 
