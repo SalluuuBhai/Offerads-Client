@@ -8,6 +8,7 @@ import { CiEdit } from "react-icons/ci";
 import { MdDeleteForever } from "react-icons/md";
 import { BsQrCode } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
+import { MdEdit } from "react-icons/md";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Button } from "react-bootstrap";
@@ -16,8 +17,8 @@ import "./UserProfile.css";
 import { storage } from "../Firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
-import {baseURL} from "../../api/api"
-const apiBaseUrl = baseURL 
+import { baseURL } from "../../api/api";
+const apiBaseUrl = baseURL;
 
 const UserProfile = () => {
   const { id } = useParams();
@@ -75,7 +76,7 @@ const UserProfile = () => {
         `${apiBaseUrl}/offers/showoffer/${userID}`
       );
 
-      // console.log("Offer Data :", response);
+      console.log("Offer Data :", response);
       // toast.success(response.data.message);
       setOfferData(response.data.offersPosts);
 
@@ -85,9 +86,9 @@ const UserProfile = () => {
       // handleError(error);
     }
   };
-  const handleDeleteOffer = async (offerId) => {
+  const handleDeleteOffer = async (offerId, offer, getOfferData) => {
     const shouldDelete = window.confirm(
-      "Are you sure you want to delete this offer?"
+      `Are you sure you want to delete this ${offer.offerTitle} offer?`
     );
 
     if (shouldDelete) {
@@ -95,7 +96,6 @@ const UserProfile = () => {
         const response = await axios.delete(
           `${apiBaseUrl}/offers/deleteoffer/${offerId}`
         );
-        // console.log(response.data);
         toast.success(response.data.message);
         getOfferData();
       } catch (error) {
@@ -144,9 +144,12 @@ const UserProfile = () => {
   const navigateToUserOfferadsPage = () => {
     navigate(`/offerview/${id}`);
   };
+  const navigateToEditPostPage = (offerID, _id) => {
+    navigate(`/editpost/${_id}-${offerID}`);
+  };
 
   const logOut = () => {
-    const shouldLogout = window.confirm("Are you sure you want to Logout ?");
+    const shouldLogout = window.confirm(`Are you sure you want to Logout ?`);
     if (shouldLogout) {
       localStorage.clear();
       toast.success("Logged out Successful");
@@ -354,24 +357,35 @@ const UserProfile = () => {
                         </a>
                       </p>
                     </div>
-                    <div className="table-responsive">
-                      <table className="table table-hover table-fluid">
+                    <div
+                      className="table-responsive"
+                      style={{
+                        maxHeight: "450px",
+                        border: "3px solid #EEF5FF",
+                        // overflow: "scroll",
+                        // scrollbarColor: "red orange",
+                        scrollbarWidth: "thin",
+                      }}
+                    >
+                      <table className="table table-hover table-fluid" >
                         <thead>
                           <tr>
-                            <th scope="col" style={{ color: "#2e6ca4" }}>
+                            <th scope="col" style={{ color: "#2e6ca4", maxWidth:"30px", padding:"10px" }}>
                               ID
                             </th>
-                            <th scope="col" style={{ color: "#2e6ca4" }}>
+                            <th scope="col" style={{ color: "#2e6ca4", padding:"10px" }}>
                               Offer Name
                             </th>
-                            <th scope="col" style={{ color: "#2e6ca4" }}>
+                            <th scope="col" style={{ color: "#2e6ca4", padding:"10px" }}>
                               Validity
                             </th>
-                            <th scope="col" style={{ color: "#2e6ca4" }}>
+                            <th scope="col" style={{ color: "#2e6ca4", padding:"10px" }}>
                               Expire
                             </th>
-                            {/* <th>Edit</th> */}
-                            <th scope="col" style={{ color: "#2e6ca4" }}>
+                            <th scope="col" style={{ color: "#2e6ca4", padding:"10px" }}>
+                              Edit
+                            </th>
+                            <th scope="col" style={{ color: "#2e6ca4", padding:"10px" }}>
                               Delete
                             </th>
                           </tr>
@@ -381,10 +395,10 @@ const UserProfile = () => {
                           Array.isArray(offerData) &&
                           offerData.length > 0 ? (
                             offerData.map((offer) => (
-                              <tr key={offer._id}>
-                                <th scope="row">{offer.offerID}</th>
-                                <td>{offer.offerTitle}</td>
-                                <td>
+                              <tr style={{padding:"10px"}} key={offer._id}>
+                                <th style={{padding:"10px"}} scope="row">{offer.offerID}</th>
+                                <td style={{padding:"10px"}}>{offer.offerTitle}</td>
+                                <td style={{padding:"10px"}}>
                                   {new Date(
                                     offer.offerValidity
                                   ).toLocaleDateString("en-GB", {
@@ -393,19 +407,36 @@ const UserProfile = () => {
                                   })}
                                 </td>
 
-                                <td>{getDaysLeft(offer.offerValidity)}</td>
+                                <td style={{padding:"10px"}}>{getDaysLeft(offer.offerValidity)}</td>
 
-                                {/* <td>
-                                <BiSolidEditAlt />
-                              </td> */}
-                                <td>
+                                <td style={{padding:"10px"}}>
+                                  <MdEdit
+                                    style={{
+                                      color: "#008080",
+                                      fontSize: "24px",
+                                      cursor: "pointer",
+                                    }}
+                                    onClick={() =>
+                                      navigateToEditPostPage(
+                                        offer.offerID,
+                                        offer._id
+                                      )
+                                    }
+                                  />
+                                </td>
+                                <td style={{padding:"10px"}}>
                                   <MdDeleteForever
                                     style={{
                                       color: "#ff6f3c",
                                       fontSize: "24px",
+                                      cursor: "pointer",
                                     }}
                                     onClick={() =>
-                                      handleDeleteOffer(offer.offerID)
+                                      handleDeleteOffer(
+                                        offer.offerID,
+                                        offer,
+                                        getOfferData
+                                      )
                                     }
                                   />
                                 </td>

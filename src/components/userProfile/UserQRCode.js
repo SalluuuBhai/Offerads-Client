@@ -11,6 +11,7 @@ import {
   FormControl,
   Alert,
 } from "react-bootstrap";
+import { RiArrowGoBackFill } from "react-icons/ri";
 import offerads from "../../assets/Offerads.png";
 import qrcode from "../../assets/qrcode.gif";
 import axios from "axios";
@@ -214,6 +215,15 @@ const UserQRCode = () => {
                         Download QR Code
                       </Button>
                     </div>
+                    <div className="text-center mt-3">
+                  <Link
+                    style={{ fontSize: "15px", textDecoration: "underline" }}
+                    to={`/userprofile/${userData._id}`}
+                  >
+                    <RiArrowGoBackFill style={{ fontSize: "20px" }} /> Back to
+                    Profile
+                  </Link>
+                </div>
                   </div>
                 </div>
               </div>

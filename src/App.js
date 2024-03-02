@@ -25,6 +25,7 @@ import UserQRCode from "./components/userProfile/UserQRCode";
 import Offerads from "./components/userProfile/OfferadsPage";
 import UpdateProfile from "./components/userProfile/UserUpdateProfile";
 import AddPost from "./components/userProfile/AddPost";
+import EditPost from "./components/userProfile/EditPost";
 
 
 
@@ -44,6 +45,7 @@ function App() {
           <Route path="/userprofile/:id" element={<UserProfile />} />
           <Route path="/updateprofile/:id" element={<UpdateProfile />} />
           <Route path="/addpost/:id" element={<AddPost />} />
+          <Route path="/editpost/:offerID" element={<EditPost />} />
           <Route path="/userQRCode/:id" element={<UserQRCode />} />
           <Route path="/offerview/:id" element={<Offerads />} />
           <Route path="/verify/:id" element={<VerificationEmail />} />
