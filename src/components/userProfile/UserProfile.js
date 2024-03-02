@@ -367,25 +367,64 @@ const UserProfile = () => {
                         scrollbarWidth: "thin",
                       }}
                     >
-                      <table className="table table-hover table-fluid" >
-                        <thead style={{ position: "sticky", top: "0", zIndex: "1", background: "#fff" }}>
+                      <table className="table table-hover table-fluid">
+                        <thead
+                          style={{
+                            position: "sticky",
+                            top: "0",
+                            zIndex: "1",
+                            background: "#fff",
+                          }}
+                        >
                           <tr>
-                            <th scope="col" style={{ color: "#2e6ca4", maxWidth:"30px", padding:"10px" }}>
+                            <th
+                              scope="col"
+                              style={{
+                                color: "#2e6ca4",
+                                maxWidth: "30px",
+                                padding: "10px",
+                              }}
+                            >
+                              #
+                            </th>
+                            <th
+                              scope="col"
+                              style={{
+                                color: "#2e6ca4",
+                                maxWidth: "30px",
+                                padding: "10px",
+                              }}
+                            >
                               ID
                             </th>
-                            <th scope="col" style={{ color: "#2e6ca4", padding:"10px" }}>
+                            <th
+                              scope="col"
+                              style={{ color: "#2e6ca4", padding: "10px" }}
+                            >
                               Offer Name
                             </th>
-                            <th scope="col" style={{ color: "#2e6ca4", padding:"10px" }}>
+                            <th
+                              scope="col"
+                              style={{ color: "#2e6ca4", padding: "10px" }}
+                            >
                               Validity
                             </th>
-                            <th scope="col" style={{ color: "#2e6ca4", padding:"10px" }}>
+                            <th
+                              scope="col"
+                              style={{ color: "#2e6ca4", padding: "10px" }}
+                            >
                               Expire
                             </th>
-                            <th scope="col" style={{ color: "#2e6ca4", padding:"10px" }}>
+                            <th
+                              scope="col"
+                              style={{ color: "#2e6ca4", padding: "10px" }}
+                            >
                               Edit
                             </th>
-                            <th scope="col" style={{ color: "#2e6ca4", padding:"10px" }}>
+                            <th
+                              scope="col"
+                              style={{ color: "#2e6ca4", padding: "10px" }}
+                            >
                               Delete
                             </th>
                           </tr>
@@ -394,11 +433,16 @@ const UserProfile = () => {
                           {offerData &&
                           Array.isArray(offerData) &&
                           offerData.length > 0 ? (
-                            offerData.map((offer) => (
-                              <tr style={{padding:"10px"}} key={offer._id}>
-                                <th style={{padding:"10px"}} scope="row">{offer.offerID}</th>
-                                <td style={{padding:"10px"}}>{offer.offerTitle}</td>
-                                <td style={{padding:"10px"}}>
+                            offerData.map((offer, index) => (
+                              <tr style={{ padding: "10px" }} key={offer._id}>
+                                <td style={{ padding: "10px", fontWeight:"bold" }}>{index + 1}</td>
+                                <th style={{ padding: "10px" }} scope="row">
+                                  {offer.offerID}
+                                </th>
+                                <td style={{ padding: "10px" }}>
+                                  {offer.offerTitle}
+                                </td>
+                                <td style={{ padding: "10px" }}>
                                   {new Date(
                                     offer.offerValidity
                                   ).toLocaleDateString("en-GB", {
@@ -407,9 +451,11 @@ const UserProfile = () => {
                                   })}
                                 </td>
 
-                                <td style={{padding:"10px"}}>{getDaysLeft(offer.offerValidity)}</td>
+                                <td style={{ padding: "10px" }}>
+                                  {getDaysLeft(offer.offerValidity)}
+                                </td>
 
-                                <td style={{padding:"10px"}}>
+                                <td style={{ padding: "10px" }}>
                                   <MdEdit
                                     style={{
                                       color: "#008080",
@@ -424,7 +470,7 @@ const UserProfile = () => {
                                     }
                                   />
                                 </td>
-                                <td style={{padding:"10px"}}>
+                                <td style={{ padding: "10px" }}>
                                   <MdDeleteForever
                                     style={{
                                       color: "#ff6f3c",
