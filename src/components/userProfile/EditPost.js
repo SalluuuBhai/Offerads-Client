@@ -51,29 +51,29 @@ const EditPost = () => {
   const offerFullID = pathname.split("/")[2] || null;
   const _id = offerFullID.split("-")[0];
   const offerID = offerFullID.split("-")[1];
-//   console.log(_id, offerID);
+  //   console.log(_id, offerID);
 
   const userID = userData._id;
-//   console.log(userID);
+  //   console.log(userID);
   const token = location.state?.token || localStorage.getItem("Token");
   // console.log(token);
 
-    const getUserData = async () => {
-      try {
-        const response = await axios.get(`${apiBaseUrl}/users/getuser`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        // console.log(response);
-        // toast.success(response.data.message);
-        setUserData(response.data.user);
-      } catch (error) {
-        // toast.error(error.response.data.message);
-        // handleError(error);
-      }
-    };
+  const getUserData = async () => {
+    try {
+      const response = await axios.get(`${apiBaseUrl}/users/getuser`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      // console.log(response);
+      // toast.success(response.data.message);
+      setUserData(response.data.user);
+    } catch (error) {
+      // toast.error(error.response.data.message);
+      // handleError(error);
+    }
+  };
   const getOfferData = async (offerID) => {
     try {
-    //   console.log(offerID);
+      //   console.log(offerID);
       const response = await axios.get(
         `${apiBaseUrl}/offers/getoffer/${offerID}`,
         {
@@ -81,7 +81,7 @@ const EditPost = () => {
         }
       );
       setOfferData(response.data.offer);
-    //   console.log(response.data.offer); // Log the offer data received
+      //   console.log(response.data.offer); // Log the offer data received
     } catch (error) {
       // Handle error, show toast, etc.
     }
@@ -89,7 +89,7 @@ const EditPost = () => {
 
   const handlePublish = async (e) => {
     e.preventDefault();
-  
+
     try {
       // Check if the image is uploaded before attempting to publish
       setLoading(true);
@@ -99,13 +99,13 @@ const EditPost = () => {
         offerValidity,
         image: imageUrl,
       };
-  
+
       // Make a PUT request to update the offer post
       const response = await axios.put(
         `${apiBaseUrl}/offers/offer-post-update/${offerID}`,
         { offerPostData }
       );
-  
+
       toast.success("Post Updated Successfully!");
       navigate(`/userprofile/${userData._id}`);
     } catch (error) {
@@ -153,7 +153,7 @@ const EditPost = () => {
       navigate("/login");
     } else {
       getOfferData(offerID);
-        getUserData();
+      getUserData();
     }
   }, [token, offerID]);
 
@@ -210,20 +210,23 @@ const EditPost = () => {
                   </div>
 
                   <div className="offer-form">
-                    
                     <Form.Group
                       controlId="formOfferValidity"
                       style={{ textAlign: "left" }}
                     >
-                      <Form.Label>Offer Valid to* {"  "}<span style={{marginLeft:"20px", color:"#9BB8CD"}}>{new Date(
-                                      offerData.offerValidity
-                                    ).toLocaleDateString("en-GB")}</span></Form.Label>
-                      
+                      <Form.Label>Offer Valid to*</Form.Label>
+
                       <Form.Control
                         type="date"
                         placeholder="Write tour Content..."
                         name="offerValidity"
-                        defaultValue={offerData.offerValidity}
+                        defaultValue={
+                          offerData.offerValidity
+                            ? new Date(offerData.offerValidity)
+                                .toISOString()
+                                .split("T")[0]
+                            : ""
+                        }
                         onChange={(e) => setOfferValidity(e.target.value)}
                         style={{ border: " 1px solid #2e6ca4" }}
                       />
@@ -253,7 +256,7 @@ const EditPost = () => {
                       <Form.Label>Offer Ads Image*</Form.Label>
                       <InputGroup className="mb-3">
                         {/* Display image inside the input field */}
-                        
+
                         <FormControl
                           className="form-control"
                           type="file"
@@ -268,9 +271,12 @@ const EditPost = () => {
                               src={offerData.image}
                               alt="Default Icon"
                               className="default-icon"
-                              style={{width:"30px", overflow:"hidden", height:"30px",
-                            objectFit:""}}
-                              
+                              style={{
+                                width: "30px",
+                                overflow: "hidden",
+                                height: "30px",
+                                objectFit: "",
+                              }}
                             />
                           </InputGroup.Text>
                         )}
