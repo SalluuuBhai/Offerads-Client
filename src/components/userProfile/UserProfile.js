@@ -88,7 +88,7 @@ const UserProfile = () => {
   };
   const handleDeleteOffer = async (offerId, offer, getOfferData) => {
     const shouldDelete = window.confirm(
-      `Are you sure you want to delete this ${offer.offerTitle} offer?`
+      `Are you sure you want to delete this ${offer.offerTitle} post?`
     );
 
     if (shouldDelete) {
@@ -361,14 +361,14 @@ const UserProfile = () => {
                       className="table-responsive"
                       style={{
                         maxHeight: "430px",
-                        
+
                         // border: "2px solid #2e6ca4",
                         // overflow: "scroll",
                         // scrollbarColor: "red orange",
                         scrollbarWidth: "thin",
                       }}
                     >
-                      <table className="table table-hover table-fluid" >
+                      <table className="table table-hover table-fluid">
                         <thead
                           style={{
                             position: "sticky",
@@ -416,12 +416,12 @@ const UserProfile = () => {
                             >
                               Validity
                             </th>
-                            <th
+                            {/* <th
                               scope="col"
                               style={{ color: "#2e6ca4", padding: "10px" }}
                             >
                               Expire
-                            </th>
+                            </th> */}
                             <th
                               scope="col"
                               style={{ color: "#2e6ca4", padding: "10px" }}
@@ -441,8 +441,15 @@ const UserProfile = () => {
                           Array.isArray(offerData) &&
                           offerData.length > 0 ? (
                             offerData.map((offer, index) => (
-                              <tr style={{ padding: "10px",  }} key={offer._id}>
-                                <td style={{ padding: "10px", fontWeight:"bold" }}>{index + 1}</td>
+                              <tr style={{ padding: "10px" }} key={offer._id}>
+                                <td
+                                  style={{
+                                    padding: "10px",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  {index + 1}
+                                </td>
                                 <th style={{ padding: "10px" }} scope="row">
                                   {offer.offerID}
                                 </th>
@@ -451,26 +458,39 @@ const UserProfile = () => {
                                 </td>
                                 <td style={{ padding: "10px" }}>
                                   <img
-                                  src={offer.image}
-                                  style={{
-                                    width:"50px",
-                                    height:"50px",
-                                    objectFit:"cover"
-                                  }}
+                                    src={offer.image}
+                                    style={{
+                                      width: "50px",
+                                      height: "50px",
+                                      objectFit: "cover",
+                                    }}
                                   />
                                 </td>
-                                <td style={{ padding: "10px" }}>
+                                <td
+                                  style={{
+                                    padding: "10px",
+                                    // display: "flex",
+                                    // flexDirection: "column",
+                                  }}
+                                >
+                                  {/* {getDaysLeft(offer.offerValidity)} */}
                                   {new Date(
                                     offer.offerValidity
                                   ).toLocaleDateString("en-GB", {
                                     day: "numeric",
                                     month: "short",
                                   })}
+                                   <br />
+                                  <span
+                                    style={{ fontSize: "12px", color: "grey" }}
+                                  >
+                                    ({getDaysLeft(offer.offerValidity)})
+                                  </span>
                                 </td>
 
-                                <td style={{ padding: "10px" }}>
+                                {/* <td style={{ padding: "10px" }}>
                                   {getDaysLeft(offer.offerValidity)}
-                                </td>
+                                </td> */}
 
                                 <td style={{ padding: "10px" }}>
                                   <MdEdit
