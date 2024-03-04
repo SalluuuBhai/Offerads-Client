@@ -10,6 +10,8 @@ import axios from "axios";
 import { baseURL } from "../../api/api";
 const apiBaseUrl = baseURL;
 
+Modal.setAppElement('#root');
+
 const SubscribeAlert = ({ title }) => {
   const location = useLocation();
   const { pathname } = location;
@@ -18,22 +20,34 @@ const SubscribeAlert = ({ title }) => {
   const [showModal, setShowModal] = useState(true);
   const [userName, setUserName] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [subscriptionMessage, setSubscriptionMessage] = useState("");
   const [subscriptionMessage2, setSubscriptionMessage2] = useState("");
   const [showDiv1, setShowDiv1] = useState(false);
-  // const [showDiv2, setShowDiv2] = useState(false);
 
   const handleSubscribe = async (e) => {
     e.preventDefault();
-    if (userName && mobileNumber) {
+
+    // Validate email format
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      setEmailError("Please enter a valid email address.");
+      return;
+    }
+
+    // Clear email error if validation passes
+    setEmailError("");
+
+    if (userName && mobileNumber && email) {
       const customerData = {
         userID,
         userName: userName,
         mobileNumber: mobileNumber,
+        email: email,
         shopName: title,
       };
-      // console.log(customerData);
       try {
         const response = await axios.post(
           `${apiBaseUrl}/customer/customerdetails`,
@@ -41,30 +55,16 @@ const SubscribeAlert = ({ title }) => {
         );
       
         if (response && response.status === 201) {
-          // Corrected: Use setShowDiv1 instead of showDiv1
           setShowDiv1(true);
           setSubscriptionMessage(response.data.message);
         } else {
           setSubscriptionMessage(response ? response.data.message : "Unknown error");
         }
-      
-        // Handle the response as needed
       } catch (error) {
-        // showDiv2(true)
-        // console.error("Error during subscription:", error);
         setSubscriptionMessage(error.response ? error.response.data.message : "Unknown error");
-        // Handle errors here
       }
     }
 
-    // Perform subscription logic here
-    // You can send the data to your server or handle it as needed
-
-    // For this example, we will just show a native alert
-    // const message = `Thank you for subscribing!\nUser Name: ${userName}\nMobile Number: ${mobileNumber}`;
-    // window.alert(message);
-
-    // Clear input fields after alert
     setUserName("");
     setMobileNumber("");
     setSubmitted(true);
@@ -74,11 +74,16 @@ const SubscribeAlert = ({ title }) => {
     return userName.trim() !== "" && mobileNumber.trim() !== "";
   };
 
+  const closeModal = () => {
+    // Add any additional cleanup logic here
+    setShowModal(false);
+  };
+
   return (
     <div className="subscribe-alert-container">
       <Modal
         isOpen={showModal}
-        onRequestClose={() => setShowModal(false)}
+        onRequestClose={closeModal}
         contentLabel="Subscription Form"
         style={{
           overlay: {
@@ -100,7 +105,7 @@ const SubscribeAlert = ({ title }) => {
           },
         }}
       >
-        <button className="close-button" onClick={() => setShowModal(false)}>
+        <button className="close-button" onClick={closeModal}>
           <IoCloseSharp />
         </button>
         {submitted ? (
@@ -156,18 +161,38 @@ const SubscribeAlert = ({ title }) => {
                   />
                 </InputGroup>
               </div>
+
+              <div className="user-form">
+                <InputGroup className="mb-3">
+                  <FormControl
+                    className="form-control"
+                    type="email"
+                    placeholder="Your Email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setEmailError("");
+                    }}
+                    isInvalid={!!emailError}
+                    required
+                  />
+                  <FormControl.Feedback type="invalid">
+                    {emailError}
+                  </FormControl.Feedback>
+                </InputGroup>
+              </div>
+
               <Button
                 variant="primary"
                 className="button"
                 type="submit"
                 style={{ backgroundColor: "#0C359E", marginTop: "5px" }}
                 onClick={handleSubscribe}
-                disabled={!isFormValid()}
+                disabled={!isFormValid() || !!emailError}
               >
                 Subscribe
               </Button>
             </Form>
-            {/* <p>ID: {userID}</p> */}
           </>
         )}
       </Modal>

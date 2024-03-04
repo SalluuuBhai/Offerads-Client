@@ -115,6 +115,7 @@ const Offerads = () => {
   useEffect(() => {
     const timerId = setTimeout(() => {
       setShowSubscribeAlert(true);
+      // handleSubscribe();
       console.log("Timer elapsed, setting showSubscribeAlert to true");
     }, 10000);
 
@@ -124,10 +125,10 @@ const Offerads = () => {
     };
   }, []);
 
-  const handleSubscribe = () => {
+  const handleSubscribe = async () => {
     console.log("Subscribe clicked");
 
-    setShowSubscribeAlert(true);
+   await setShowSubscribeAlert(true);
   };
   // useEffect(() => {
   //   // Your logic that depends on showSubscribeAlert
@@ -249,6 +250,9 @@ const Offerads = () => {
                                 overflow: "hidden",
                                 textOverflow: "ellipsis",
                                 whiteSpace: "nowrap",
+                                justifyContent: "flex-start",
+                                alignItems: "flex-start",
+                                textAlign: "left",
                               }}
                             >
                               {userData.shopName}
@@ -293,6 +297,7 @@ const Offerads = () => {
                         >
                           <FaBell
                             style={{ color: "white", fontSize: "24px" }}
+                            onClick={handleSubscribe}
                           />
                         </div>
                       </div>
